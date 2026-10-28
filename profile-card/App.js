@@ -20,6 +20,12 @@ export default function App() {
       {/* TODO STEP 1: build the card with View and Text (name, role, location, bio) */}
       <View style={styles.card}>
 
+      {/* TODO STEP 2: add the banner and the avatar with Image */}
+        <Image source={require('./assets/banner.png')} style={styles.banner} resizeMode='cover'/>
+
+        <Image source={require('./assets/avatar.png')} style={styles.avatar}/>
+
+
         <Text style={styles.name}>Alex Rivera</Text>
         
         <Text style={styles.role}>Mobile Developer</Text>
@@ -30,7 +36,8 @@ export default function App() {
 
 
       </View>
-      {/* TODO STEP 2: add the banner and the avatar with Image */}
+
+
       {/* TODO STEP 3: header row and stats row with Flexbox */}
       {/* TODO STEP 4: online badge, skill tags and action buttons (layout) */}
       {/* TODO STEP 5: polish the styles (colors, typography, shadow) */}
@@ -66,5 +73,20 @@ const styles = StyleSheet.create({
     fontSize: 15,
     marginTop: 15,
 
+  },
+  banner:{
+    width:'100%',
+    height: 120,
+  },
+  avatar:{
+    width:96,
+    height:96,
+    borderRadius: 100,
+    borderWidth: 4,
+    borderColor:"#ffffff",
+    marginTop:-48
   }
+
+
+
 });
