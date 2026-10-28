@@ -18,11 +18,22 @@ export default function App() {
   return (
     <View style={styles.screen}>
       {/* TODO STEP 1: build the card with View and Text (name, role, location, bio) */}
+      <View style={styles.card}>
+
+        <Text style={styles.name}>Alex Rivera</Text>
+        
+        <Text style={styles.role}>Mobile Developer</Text>
+        
+        <Text style={styles.location}>Lisbon, Portugal</Text>
+        
+        <Text style={styles.bio} numberOfLines={3}>{BIO}</Text>
+
+
+      </View>
       {/* TODO STEP 2: add the banner and the avatar with Image */}
       {/* TODO STEP 3: header row and stats row with Flexbox */}
       {/* TODO STEP 4: online badge, skill tags and action buttons (layout) */}
       {/* TODO STEP 5: polish the styles (colors, typography, shadow) */}
-      <Text>TODO: build the profile card</Text>
     </View>
   );
 }
@@ -34,4 +45,26 @@ const styles = StyleSheet.create({
     paddingHorizontal: 20,
     backgroundColor: '#EEF1F6',
   },
+  card:{
+    backgroundColor: '#FFFFFF',
+    padding:20
+  },
+  name:{
+    fontSize: 25,
+    fontWeight: 'bold'
+  },
+  role:{
+    fontSize: 17,
+    color: '#2f6fed',
+  },
+  location:{
+    fontSize: 16,
+    color: '#6d7482'
+
+  },
+  bio:{
+    fontSize: 15,
+    marginTop: 15,
+
+  }
 });
