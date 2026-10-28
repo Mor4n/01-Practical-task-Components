@@ -26,7 +26,12 @@ export default function App() {
         {/* TODO STEP 3: header row and stats row with Flexbox */}
 
         <View style={styles.header}>
-          <Image source={require('./assets/avatar.png')} style={styles.avatar}/>
+
+        {/* TODO STEP 4: online badge, skill tags and action buttons (layout) */}
+          <View style={styles.avatarWrap}>
+            <Image source={require('./assets/avatar.png')} style={styles.avatar}/>
+            <View style={styles.badge}/>
+          </View>
 
           <View style={styles.information}>
             <Text style={styles.name}>Alex Rivera</Text>
@@ -55,10 +60,34 @@ export default function App() {
           )}
         </View>
 
+        <View style={styles.tags}>
+          {
+            SKILLS.map( skillItem => (
+              <View style={styles.tag} key={skillItem}>
+                  <Text style={styles.tagText}>{skillItem}</Text>
+              </View>
+            ))
+          }
+
+
+        </View>
+
+
+        <View style={styles.actions}>
+
+          <View style={styles.button}>
+            <Text style={styles.buttonText}>Follow</Text>
+          </View>
+
+          <View style={styles.button}>
+            <Text style={styles.buttonText}>Message</Text>
+          </View>
+
+        </View>
+
       </View>
 
 
-      {/* TODO STEP 4: online badge, skill tags and action buttons (layout) */}
       {/* TODO STEP 5: polish the styles (colors, typography, shadow) */}
     </View>
   );
@@ -103,7 +132,6 @@ const styles = StyleSheet.create({
     borderRadius: 100,
     borderWidth: 4,
     borderColor:"#ffffff",
-    marginTop:-48
   },
   header:{
     flexDirection:'row',
@@ -134,7 +162,52 @@ const styles = StyleSheet.create({
   label:{
     fontSize:15,
     color: '#6d7482'
-
+  },
+  avatarWrap:{
+    marginTop:-38
+    
+  },
+  badge:{
+    width:18,
+    height:18,
+    backgroundColor:'#22c55e',
+    borderRadius:100,
+    borderWidth:3,
+    borderColor:'#FFFFFF',
+    position:'absolute',
+    top:70,
+    right:5
+  },
+  tags:{
+    flexDirection: "row",
+    flexWrap: 'wrap',
+    gap:3,
+    marginTop:15
+  },
+  tag:{
+    paddingHorizontal:10,
+    paddingVertical: 6,
+    backgroundColor: '#e6eeff',
+  },
+  tagText:{
+    fontSize:13
+  },
+  actions:{
+    flexDirection:"row",
+    marginTop: 12,
+    gap: 6
+  },
+  button:{
+    flex:1,
+    flexBasis:0,
+    alignItems:"center",
+    paddingVertical:12,
+    borderColor:"#75a0f3",
+    borderWidth:2,
+    borderRadius:100,
+  },
+  buttonText:{
+    fontWeight:'600'
   }
 
 
