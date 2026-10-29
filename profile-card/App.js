@@ -1,6 +1,6 @@
 // Profile Card — practical task (React Native basics)
 // Follow the steps in README.md and build your solution in this file.
-import { View, Text, Image, StyleSheet,Platform } from 'react-native';
+import { View, Text, Image, StyleSheet,Platform, useWindowDimensions } from 'react-native';
 
 // Data to display. Do not change it.
 const BIO =
@@ -48,10 +48,14 @@ function Tag({ label }) {
 
 
 export default function App() {
+
+  const { width } = useWindowDimensions();
+  const isWide = width > 600;
+
   return (
     <View style={styles.screen}>
       {/* TODO STEP 1: build the card with View and Text (name, role, location, bio) */}
-      <View style={styles.card}>
+      <View style={[styles.card, isWide && styles.cardWide]}>
 
         {/* TODO STEP 2: add the banner and the avatar with Image */}
         <View style={styles.bannerWrap}>
@@ -142,6 +146,11 @@ const styles = StyleSheet.create({
         elevation: 6,
       },
     }),
+  },
+  cardWide:{
+    width: '100%',
+    maxWidth: 420,
+    alignSelf: 'center',
   },
   bannerWrap:{
     marginTop: -20,
