@@ -93,13 +93,16 @@ export default function App() {
           ))}
         </View>
 
-        <View style={styles.tags}>
-          {
-            SKILLS.map( skillItem => (
-              <Tag key={skillItem} label={skillItem} />
-            ))
-          }
+        <View style={styles.skillsSection}>
+          <Text style={styles.skillsTitle}>Skills</Text>
 
+          <View style={styles.tags}>
+            {
+              SKILLS.map( skillItem => (
+                <Tag key={skillItem} label={skillItem} />
+              ))
+            }
+          </View>
 
         </View>
 
@@ -238,11 +241,22 @@ const styles = StyleSheet.create({
     fontSize:15,
     color: COLORS.muted
   },
+  skillsSection:{
+    marginTop:15
+  },
+  skillsTitle:{
+    textTransform: 'uppercase',
+    letterSpacing: 1,
+    fontSize: 13,
+    fontWeight: '600',
+    color: COLORS.muted,
+    marginBottom: 8,
+  },
+
   tags:{
     flexDirection: "row",
     flexWrap: 'wrap',
     gap:10,
-    marginTop:15
   },
   tag:{
     paddingHorizontal:12,
