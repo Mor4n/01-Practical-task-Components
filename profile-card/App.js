@@ -26,6 +26,27 @@ const COLORS = {
 }
 
 
+function StatItem({ label, value, divider }) {
+  return(
+  <View style={[styles.stats, divider > 0 && styles.statDivider]}>
+            
+    <Text style={styles.value}>{value}</Text>
+    <Text style={styles.label}>{label}</Text>
+                
+  </View>
+  )
+}
+function Tag({ label }) {
+  return (
+    <View style={styles.tag}>
+
+      <Text style={styles.tagText}>{label}</Text>
+      
+    </View>
+  )
+}
+
+
 export default function App() {
   return (
     <View style={styles.screen}>
@@ -64,23 +85,14 @@ export default function App() {
           
           {
           STATS.map( (item,index) => ( 
-            <View style={[styles.stats, index > 0 && styles.statDivider]} key={item.label}>
-            
-                <Text style={styles.value}>{item.value}</Text>
-                <Text style={styles.label}>{item.label}</Text>
-                
-            </View>
-
-          )
-          )}
+              <StatItem key={item.label}label={item.label} value={item.value} divider={index > 0}/>
+          ))}
         </View>
 
         <View style={styles.tags}>
           {
             SKILLS.map( skillItem => (
-              <View style={styles.tag} key={skillItem}>
-                  <Text style={styles.tagText}>{skillItem}</Text>
-              </View>
+              <Tag key={skillItem} label={skillItem} />
             ))
           }
 
