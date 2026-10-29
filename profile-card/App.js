@@ -1,6 +1,6 @@
 // Profile Card — practical task (React Native basics)
 // Follow the steps in README.md and build your solution in this file.
-import { View, Text, Image, StyleSheet } from 'react-native';
+import { View, Text, Image, StyleSheet,Platform, useWindowDimensions } from 'react-native';
 
 // Data to display. Do not change it.
 const BIO =
@@ -14,24 +14,290 @@ const STATS = [
 
 const SKILLS = ['React Native', 'JavaScript', 'UI Design', 'Git', 'Flexbox'];
 
+const COLORS = {
+  background:"#EEF1F6",
+  card:"#FFFFFF",
+  text:"#0c111b",
+  muted:"#6d7482",
+  primary:"#2f6fed",
+  primaryLight:"#E8EFFD",
+  border:"#e7e7e7",
+  online:"#22C55E"
+}
+
+
+function StatItem({ label, value, divider }) {
+  return(
+  <View style={[styles.stats, divider > 0 && styles.statDivider]}>
+            
+    <Text style={styles.value}>{value}</Text>
+    <Text style={styles.label}>{label}</Text>
+                
+  </View>
+  )
+}
+function Tag({ label }) {
+  return (
+    <View style={styles.tag}>
+
+      <Text style={styles.tagText}>{label}</Text>
+      
+    </View>
+  )
+}
+
+
 export default function App() {
+
+  const { width } = useWindowDimensions();
+  const isWide = width > 600;
+
   return (
     <View style={styles.screen}>
       {/* TODO STEP 1: build the card with View and Text (name, role, location, bio) */}
-      {/* TODO STEP 2: add the banner and the avatar with Image */}
-      {/* TODO STEP 3: header row and stats row with Flexbox */}
-      {/* TODO STEP 4: online badge, skill tags and action buttons (layout) */}
+      <View style={[styles.card, isWide && styles.cardWide]}>
+
+        {/* TODO STEP 2: add the banner and the avatar with Image */}
+        <View style={styles.bannerWrap}>
+        <Image source={require('./assets/banner.png')} style={styles.banner} resizeMode='cover'/>
+
+        </View>
+          
+        {/* TODO STEP 3: header row and stats row with Flexbox */}
+
+        <View style={styles.header}>
+
+        {/* TODO STEP 4: online badge, skill tags and action buttons (layout) */}
+          <View style={styles.avatarWrap}>
+            <Image source={require('./assets/avatar.png')} style={styles.avatar}/>
+            <View style={styles.badge}/>
+          </View>
+
+          <View style={styles.information}>
+            <Text style={styles.name}>Alex Rivera</Text>
+          
+            <Text style={styles.role}>Mobile Developer</Text>
+            
+            <Text style={styles.location}>Lisbon, Portugal</Text>
+          </View>
+
+        </View>
+          
+        <Text style={styles.bio} numberOfLines={3}>{BIO}</Text>
+
+        <View style={styles.rowStats}>
+          
+          {
+          STATS.map( (item,index) => ( 
+              <StatItem key={item.label}label={item.label} value={item.value} divider={index > 0}/>
+          ))}
+        </View>
+
+        <View style={styles.skillsSection}>
+          <Text style={styles.skillsTitle}>Skills</Text>
+
+          <View style={styles.tags}>
+            {
+              SKILLS.map( skillItem => (
+                <Tag key={skillItem} label={skillItem} />
+              ))
+            }
+          </View>
+
+        </View>
+
+
+        <View style={styles.actions}>
+
+          <View style={[styles.button, styles.buttonFilled]}>
+            <Text style={[styles.buttonText,styles.buttonTextFilled]}>Follow</Text>
+          </View>
+
+          <View style={[styles.button, styles.buttonUnfilled]}>
+            <Text style={[styles.buttonText, styles.buttonTextUnfilled]}>Message</Text>
+          </View>
+
+        </View>
+
+      </View>
+
+
       {/* TODO STEP 5: polish the styles (colors, typography, shadow) */}
-      <Text>TODO: build the profile card</Text>
     </View>
   );
 }
 
 const styles = StyleSheet.create({
   screen: {
+    justifyContent: 'center',
     flex: 1,
-    paddingTop: 64,
     paddingHorizontal: 20,
-    backgroundColor: '#EEF1F6',
+    backgroundColor: COLORS.background,
   },
+  card:{
+    backgroundColor: COLORS.card,
+    padding:20,
+    borderRadius: 20,
+    ...Platform.select({
+      ios: {
+        shadowColor: COLORS.text,
+        shadowOffset: { width: 0, height: 8 },
+        shadowOpacity: 0.12,
+        shadowRadius: 16,
+      },
+      android: {
+        elevation: 6,
+      },
+    }),
+  },
+  cardWide:{
+    width: '100%',
+    maxWidth: 420,
+    alignSelf: 'center',
+  },
+  bannerWrap:{
+    marginTop: -20,
+    marginHorizontal: -20,
+  },
+  banner:{
+    width: '100%',
+    height: 120,
+    borderTopLeftRadius: 20,
+    borderTopRightRadius: 20,
+  },
+  header:{
+    flexDirection:'row',
+  },
+  avatarWrap:{
+    marginTop:-38
+  },
+  avatar:{
+    width:96,
+    height:96,
+    borderRadius: 100,
+    borderWidth: 4,
+    borderColor:COLORS.card,
+  },
+  badge:{
+    width:18,
+    height:18,
+    backgroundColor:COLORS.online,
+    borderRadius:100,
+    borderWidth:3,
+    borderColor:COLORS.card,
+    position:'absolute',
+    top:70,
+    right:5
+  },
+  information:{
+    flex:1,
+    marginTop:7,
+    marginLeft:10
+  },
+  name:{
+    fontSize: 25,
+    fontWeight: 'bold',
+    color: COLORS.text
+  },
+  role:{
+    fontSize: 17,
+    color: COLORS.primary,
+    fontWeight: '500',
+    marginTop: 2,
+  },
+  location:{
+    fontSize: 16,
+    color: COLORS.muted,
+    marginTop: 2,
+  },
+  bio:{
+    fontSize: 15,
+    marginTop: 15,
+    color:COLORS.text,
+    lineHeight:22
+  },
+  rowStats:{
+    flexDirection:"row",
+    marginTop:12,
+    borderTopWidth:1,
+    borderBottomWidth: 1,
+    borderColor: COLORS.border,
+  },
+  stats:{
+    paddingVertical: 9,
+    flex:1,
+    alignItems:"center"
+  },
+  statDivider:{
+    borderLeftWidth:1,
+    borderColor:COLORS.border
+  },
+  value:{
+    fontSize:24,
+    fontWeight:"bold",
+    color:COLORS.text
+  },
+  label:{
+    fontSize:15,
+    color: COLORS.muted
+  },
+  skillsSection:{
+    marginTop:15
+  },
+  skillsTitle:{
+    textTransform: 'uppercase',
+    letterSpacing: 1,
+    fontSize: 13,
+    fontWeight: '600',
+    color: COLORS.muted,
+    marginBottom: 8,
+  },
+
+  tags:{
+    flexDirection: "row",
+    flexWrap: 'wrap',
+    gap:10,
+  },
+  tag:{
+    paddingHorizontal:12,
+    paddingVertical: 6,
+    borderRadius:10000,
+    backgroundColor: COLORS.primaryLight,
+  },
+  tagText:{
+    fontSize:13,
+    color: COLORS.primary,
+    fontWeight:'600'
+  },
+  actions:{
+    flexDirection:"row",
+    marginTop: 12,
+    gap: 6
+  },
+  button:{
+    flex:1,
+    flexBasis:0,
+    alignItems:"center",
+    paddingVertical:12,
+    borderColor:COLORS.primary,
+    borderWidth:2,
+    borderRadius:12,
+  },
+  buttonFilled: {
+    backgroundColor: COLORS.primary,
+  },
+  buttonUnfilled: {
+    backgroundColor: 'transparent',
+  },
+  buttonText:{
+    fontSize:17,
+    fontWeight:'600'
+  },
+  buttonTextFilled: {
+    color: COLORS.card,
+  },
+  buttonTextUnfilled: {
+    color: COLORS.primary,
+  },
+
 });
