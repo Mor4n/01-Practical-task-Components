@@ -1,6 +1,6 @@
 // Profile Card — practical task (React Native basics)
 // Follow the steps in README.md and build your solution in this file.
-import { View, Text, Image, StyleSheet } from 'react-native';
+import { View, Text, Image, StyleSheet,Platform } from 'react-native';
 
 // Data to display. Do not change it.
 const BIO =
@@ -14,6 +14,18 @@ const STATS = [
 
 const SKILLS = ['React Native', 'JavaScript', 'UI Design', 'Git', 'Flexbox'];
 
+const COLORS = {
+  background:"#EEF1F6",
+  card:"#FFFFFF",
+  text:"#0c111b",
+  muted:"#6d7482",
+  primary:"#2f6fed",
+  primaryLight:"#E8EFFD",
+  border:"#e7e7e7",
+  online:"#22C55E"
+}
+
+
 export default function App() {
   return (
     <View style={styles.screen}>
@@ -21,7 +33,10 @@ export default function App() {
       <View style={styles.card}>
 
         {/* TODO STEP 2: add the banner and the avatar with Image */}
+        <View style={styles.bannerWrap}>
         <Image source={require('./assets/banner.png')} style={styles.banner} resizeMode='cover'/>
+
+        </View>
           
         {/* TODO STEP 3: header row and stats row with Flexbox */}
 
@@ -48,8 +63,8 @@ export default function App() {
         <View style={styles.rowStats}>
           
           {
-          STATS.map( item => ( 
-            <View style={styles.stats} key={item.label}>
+          STATS.map( (item,index) => ( 
+            <View style={[styles.stats, index > 0 && styles.statDivider]} key={item.label}>
             
                 <Text style={styles.value}>{item.value}</Text>
                 <Text style={styles.label}>{item.label}</Text>
@@ -75,12 +90,12 @@ export default function App() {
 
         <View style={styles.actions}>
 
-          <View style={styles.button}>
-            <Text style={styles.buttonText}>Follow</Text>
+          <View style={[styles.button, styles.buttonFilled]}>
+            <Text style={[styles.buttonText,styles.buttonTextFilled]}>Follow</Text>
           </View>
 
-          <View style={styles.button}>
-            <Text style={styles.buttonText}>Message</Text>
+          <View style={[styles.button, styles.buttonUnfilled]}>
+            <Text style={[styles.buttonText, styles.buttonTextUnfilled]}>Message</Text>
           </View>
 
         </View>
@@ -95,102 +110,129 @@ export default function App() {
 
 const styles = StyleSheet.create({
   screen: {
+    justifyContent: 'center',
     flex: 1,
-    paddingTop: 64,
     paddingHorizontal: 20,
-    backgroundColor: '#EEF1F6',
+    backgroundColor: COLORS.background,
   },
   card:{
-    backgroundColor: '#FFFFFF',
-    padding:20
+    backgroundColor: COLORS.card,
+    padding:20,
+    borderRadius: 20,
+    ...Platform.select({
+      ios: {
+        shadowColor: COLORS.text,
+        shadowOffset: { width: 0, height: 8 },
+        shadowOpacity: 0.12,
+        shadowRadius: 16,
+      },
+      android: {
+        elevation: 6,
+      },
+    }),
   },
-  name:{
-    fontSize: 25,
-    fontWeight: 'bold'
-  },
-  role:{
-    fontSize: 17,
-    color: '#2f6fed',
-  },
-  location:{
-    fontSize: 16,
-    color: '#6d7482'
-
-  },
-  bio:{
-    fontSize: 15,
-    marginTop: 15,
-
+  bannerWrap:{
+    marginTop: -20,
+    marginHorizontal: -20,
   },
   banner:{
-    width:'100%',
+    width: '100%',
     height: 120,
+    borderTopLeftRadius: 20,
+    borderTopRightRadius: 20,
+  },
+  header:{
+    flexDirection:'row',
+  },
+  avatarWrap:{
+    marginTop:-38
   },
   avatar:{
     width:96,
     height:96,
     borderRadius: 100,
     borderWidth: 4,
-    borderColor:"#ffffff",
+    borderColor:COLORS.card,
   },
-  header:{
-    flexDirection:'row',
+  badge:{
+    width:18,
+    height:18,
+    backgroundColor:COLORS.online,
+    borderRadius:100,
+    borderWidth:3,
+    borderColor:COLORS.card,
+    position:'absolute',
+    top:70,
+    right:5
   },
   information:{
     flex:1,
     marginTop:7,
-    marginLeft:7
-
+    marginLeft:10
+  },
+  name:{
+    fontSize: 25,
+    fontWeight: 'bold',
+    color: COLORS.text
+  },
+  role:{
+    fontSize: 17,
+    color: COLORS.primary,
+    fontWeight: '500',
+    marginTop: 2,
+  },
+  location:{
+    fontSize: 16,
+    color: COLORS.muted,
+    marginTop: 2,
+  },
+  bio:{
+    fontSize: 15,
+    marginTop: 15,
+    color:COLORS.text,
+    lineHeight:22
   },
   rowStats:{
     flexDirection:"row",
     marginTop:12,
     borderTopWidth:1,
     borderBottomWidth: 1,
-    borderColor: '#e7e7e7',
-    paddingVertical: 12,
+    borderColor: COLORS.border,
   },
   stats:{
+    paddingVertical: 9,
     flex:1,
     alignItems:"center"
-    
+  },
+  statDivider:{
+    borderLeftWidth:1,
+    borderColor:COLORS.border
   },
   value:{
     fontSize:24,
     fontWeight:"bold",
+    color:COLORS.text
   },
   label:{
     fontSize:15,
-    color: '#6d7482'
-  },
-  avatarWrap:{
-    marginTop:-38
-    
-  },
-  badge:{
-    width:18,
-    height:18,
-    backgroundColor:'#22c55e',
-    borderRadius:100,
-    borderWidth:3,
-    borderColor:'#FFFFFF',
-    position:'absolute',
-    top:70,
-    right:5
+    color: COLORS.muted
   },
   tags:{
     flexDirection: "row",
     flexWrap: 'wrap',
-    gap:3,
+    gap:10,
     marginTop:15
   },
   tag:{
-    paddingHorizontal:10,
+    paddingHorizontal:12,
     paddingVertical: 6,
-    backgroundColor: '#e6eeff',
+    borderRadius:10000,
+    backgroundColor: COLORS.primaryLight,
   },
   tagText:{
-    fontSize:13
+    fontSize:13,
+    color: COLORS.primary,
+    fontWeight:'600'
   },
   actions:{
     flexDirection:"row",
@@ -202,14 +244,25 @@ const styles = StyleSheet.create({
     flexBasis:0,
     alignItems:"center",
     paddingVertical:12,
-    borderColor:"#75a0f3",
+    borderColor:COLORS.primary,
     borderWidth:2,
-    borderRadius:100,
+    borderRadius:12,
+  },
+  buttonFilled: {
+    backgroundColor: COLORS.primary,
+  },
+  buttonUnfilled: {
+    backgroundColor: 'transparent',
   },
   buttonText:{
+    fontSize:17,
     fontWeight:'600'
-  }
-
-
+  },
+  buttonTextFilled: {
+    color: COLORS.card,
+  },
+  buttonTextUnfilled: {
+    color: COLORS.primary,
+  },
 
 });
